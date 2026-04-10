@@ -1,0 +1,32 @@
+name: Build Firefox Package
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read manifest version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' manifest.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build zip
+        run: |
+          ZIP_NAME="open-with-custom-url-firefox-${{ steps.version.outputs.version }}.zip"
+          zip -r "$ZIP_NAME" manifest.json background.js popup.html popup.js icons
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension-package
+          path: open-with-custom-url-firefox-*.zip

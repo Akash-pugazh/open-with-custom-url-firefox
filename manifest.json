@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Open With Custom URL",
+  "version": "1.1.0",
+  "description": "Right-click any link to open it via your configured base URL prefix.",
+  "homepage_url": "https://github.com/akash/open-with-custom-url-firefox",
+  "author": "Akash",
+  "applications": {
+    "gecko": {
+      "id": "open-with-custom-url@akash.dev",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "icons": {
+    "48": "icons/icon48.svg",
+    "96": "icons/icon96.svg"
+  },
+  "browser_action": {
+    "default_icon": "icons/icon48.svg",
+    "default_title": "Open With Custom URL Settings",
+    "default_popup": "popup.html"
+  }
+}
